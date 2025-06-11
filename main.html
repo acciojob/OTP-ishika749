@@ -6,52 +6,56 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-color: #f8f8f8;
     }
+
     .otp-box {
       border: 2px solid black;
       border-radius: 10px;
-      width: 700px;
-      padding: 60px 40px;
-      box-sizing: border-box;
+      padding: 50px;
+      width: 600px;
       background-color: white;
     }
+
     #verification_heading {
       text-align: center;
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 10px;
     }
+
     #verification_subtext {
       text-align: center;
       font-size: 14px;
       color: #666;
       margin-bottom: 30px;
     }
+
     .code-container {
       display: flex;
       justify-content: center;
       gap: 15px;
     }
+
     .code {
       width: 60px;
-      height: 70px;
-      font-size: 36px;
+      height: 60px;
+      font-size: 32px;
       text-align: center;
       border: 1px solid #ccc;
       border-radius: 8px;
     }
+
     .info-box {
-      text-align: center;
-      font-size: 14px;
-      margin-top: 20px;
-      background: #eee;
+      margin-top: 30px;
+      background-color: #eee;
       padding: 12px;
+      text-align: center;
       border-radius: 6px;
     }
   </style>
@@ -59,45 +63,39 @@
 <body>
   <div class="otp-box">
     <h1 id="verification_heading">Verify Your Account</h1>
-    <p id="verification_subtext">
-      We emailed you the six digit code to acciojob@email.com
-      Enter the code below to confirm your email address.
-    </p>
+    <p id="verification_subtext">We emailed you the six digit code to acciojob@email.com Enter the code below to confirm your email address.</p>
+
     <div class="code-container">
-      <input id="code-1" class="code" type="text" maxlength="1" autofocus autocomplete="off" />
-      <input id="code-2" class="code" type="text" maxlength="1" autocomplete="off" />
-      <input id="code-3" class="code" type="text" maxlength="1" autocomplete="off" />
-      <input id="code-4" class="code" type="text" maxlength="1" autocomplete="off" />
-      <input id="code-5" class="code" type="text" maxlength="1" autocomplete="off" />
-      <input id="code-6" class="code" type="text" maxlength="1" autocomplete="off" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
     </div>
+
     <div class="info-box">
       This is design only. We didn’t actually send you an email as we don’t have your email, right?
     </div>
   </div>
 
   <script>
-    const inputs = [...document.querySelectorAll('.code')];
+    const inputs = document.querySelectorAll('.code');
 
-    // Focus the first input if not using autofocus
-    window.addEventListener('load', () => {
-      if (!inputs[0].hasAttribute('autofocus')) inputs[0].focus();
-    });
-
-    inputs.forEach((input, i) => {
+    inputs.forEach((input, index) => {
       input.addEventListener('input', () => {
-        if (input.value && i < inputs.length - 1) {
-          inputs[i + 1].focus();
+        const value = input.value;
+        if (value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
         }
       });
 
       input.addEventListener('keydown', (e) => {
         if (e.key === 'Backspace') {
-          e.preventDefault();  // Prevent default deletion
           if (input.value === '') {
-            if (i > 0) {
-              inputs[i - 1].value = '';
-              inputs[i - 1].focus();
+            if (index > 0) {
+              inputs[index - 1].value = '';
+              inputs[index - 1].focus();
             }
           } else {
             input.value = '';
@@ -105,8 +103,14 @@
         }
       });
     });
+
+    // Focus first input on page load
+    window.addEventListener('load', () => {
+      inputs[0].focus();
+    });
   </script>
 </body>
 </html>
+
 
 
