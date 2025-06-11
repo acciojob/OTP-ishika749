@@ -1,19 +1,122 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OTP Verification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f8f8f8;
+    }
+    .otp-box {
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 40px 20px;
+      width: 90%;
+      max-width: 500px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    #verification_heading {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    #verification_subtext {
+      font-size: 16px;
+      margin-top: 8px;
+      color: gray;
+    }
+    .code-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .code {
+      width: 40px;
+      height: 50px;
+      font-size: 24px;
+      text-align: center;
+      margin: 0 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .info-box {
+      margin-top: 20px;
+      background-color: #eee;
+      color: gray;
+      padding: 10px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="otp-box">
     <h1 id="verification_heading">Verify Your Account</h1>
-    <p id="verification_subtext">Enter the 6-digit code sent to your email to verify your account.Enter the code below to confirm your email address.</p>
-    
-    <div class="border-box">
-        <div class="code-container">
-            <input type="text" class="code" maxlength="1" id="code-1">
-            <input type="text" class="code" maxlength="1" id="code-2">
-            <input type="text" class="code" maxlength="1" id="code-3">
-            <input type="text" class="code" maxlength="1" id="code-4">
-            <input type="text" class="code" maxlength="1" id="code-5">
-            <input type="text" class="code" maxlength="1" id="code-6">
-        </div>
+    <p id="verification_subtext">
+      We emailed you the six digit code to acciojob@email.com
+      Enter the code below to confirm your email address.
+    </p>
+
+    <div class="code-container">
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
+      <input class="code" type="text" maxlength="1" />
     </div>
 
-    <div class="downside-box">
-        <p class="downside-text">This is design only.We didn't actually send you an email as we don't have your email,right?</p>
+    <div class="info-box">
+      This is design only. We didn’t actually send you an email as we don’t have your email, right?
     </div>
-</div>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll('.code');
+
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        if (input.value) {
+          if (index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        }
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === "Backspace") {
+          if (input.value === "") {
+            if (index > 0) {
+              inputs[index - 1].focus();
+              inputs[index - 1].value = "";
+              e.preventDefault();
+            }
+          }
+        }
+      });
+
+      input.addEventListener('paste', (e) => {
+        const pasteData = e.clipboardData.getData('text');
+        if (/^\d{6}$/.test(pasteData)) {
+          for (let i = 0; i < 6; i++) {
+            inputs[i].value = pasteData[i];
+          }
+          inputs[5].focus();
+        }
+        e.preventDefault();
+      });
+    });
+  </script>
+
+</body>
+</html>
+
+
