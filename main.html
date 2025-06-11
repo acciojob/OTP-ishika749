@@ -6,44 +6,38 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
+      background-color: #f8f8f8;
     }
-
     .otp-box {
       border: 2px solid black;
       border-radius: 10px;
-      padding: 60px 40px;
       width: 700px;
-      background-color: white;
+      padding: 60px 40px;
       box-sizing: border-box;
+      background-color: white;
     }
-
     #verification_heading {
       text-align: center;
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 10px;
     }
-
     #verification_subtext {
       text-align: center;
       font-size: 14px;
       color: #666;
       margin-bottom: 30px;
     }
-
     .code-container {
       display: flex;
-      justify-content: space-between;
-      max-width: 440px;
-      margin: 0 auto 20px auto;
+      justify-content: center;
+      gap: 15px;
     }
-
     .code {
       width: 60px;
       height: 70px;
@@ -52,15 +46,13 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
-
     .info-box {
       text-align: center;
       font-size: 14px;
-      padding: 10px;
-      background-color: #eee;
-      color: #555;
-      border-radius: 6px;
       margin-top: 20px;
+      background: #eee;
+      padding: 12px;
+      border-radius: 6px;
     }
   </style>
 </head>
@@ -71,37 +63,41 @@
       We emailed you the six digit code to acciojob@email.com
       Enter the code below to confirm your email address.
     </p>
-
     <div class="code-container">
-      <input id="code-1" class="code" type="text" maxlength="1" autofocus />
-      <input id="code-2" class="code" type="text" maxlength="1" />
-      <input id="code-3" class="code" type="text" maxlength="1" />
-      <input id="code-4" class="code" type="text" maxlength="1" />
-      <input id="code-5" class="code" type="text" maxlength="1" />
-      <input id="code-6" class="code" type="text" maxlength="1" />
+      <input id="code-1" class="code" type="text" maxlength="1" autofocus autocomplete="off" />
+      <input id="code-2" class="code" type="text" maxlength="1" autocomplete="off" />
+      <input id="code-3" class="code" type="text" maxlength="1" autocomplete="off" />
+      <input id="code-4" class="code" type="text" maxlength="1" autocomplete="off" />
+      <input id="code-5" class="code" type="text" maxlength="1" autocomplete="off" />
+      <input id="code-6" class="code" type="text" maxlength="1" autocomplete="off" />
     </div>
-
     <div class="info-box">
       This is design only. We didn’t actually send you an email as we don’t have your email, right?
     </div>
   </div>
 
   <script>
-    const inputs = document.querySelectorAll('.code');
+    const inputs = [...document.querySelectorAll('.code')];
 
-    inputs.forEach((input, index) => {
+    // Focus the first input if not using autofocus
+    window.addEventListener('load', () => {
+      if (!inputs[0].hasAttribute('autofocus')) inputs[0].focus();
+    });
+
+    inputs.forEach((input, i) => {
       input.addEventListener('input', () => {
-        if (input.value && index < inputs.length - 1) {
-          inputs[index + 1].focus();
+        if (input.value && i < inputs.length - 1) {
+          inputs[i + 1].focus();
         }
       });
 
       input.addEventListener('keydown', (e) => {
         if (e.key === 'Backspace') {
+          e.preventDefault();  // Prevent default deletion
           if (input.value === '') {
-            if (index > 0) {
-              inputs[index - 1].focus();
-              inputs[index - 1].value = '';
+            if (i > 0) {
+              inputs[i - 1].value = '';
+              inputs[i - 1].focus();
             }
           } else {
             input.value = '';
@@ -112,4 +108,5 @@
   </script>
 </body>
 </html>
+
 
