@@ -12,16 +12,14 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-	
     }
 
     .otp-box {
       border: 2px solid black;
       border-radius: 10px;
-      padding: 40px 20px;
+      padding: 100px 60px;
       width: 700px;
       background-color: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
       box-sizing: border-box;
     }
 
@@ -42,7 +40,8 @@
     .code-container {
       display: flex;
       justify-content: space-between;
-      padding: 0 40px;
+      margin: 0 auto;
+      max-width: 450px;
     }
 
     .code {
@@ -52,7 +51,6 @@
       text-align: center;
       border: 1px solid #ccc;
       border-radius: 8px;
-      box-shadow: inset 0 0 2px rgba(0,0,0,0.1);
     }
 
     .info-box {
@@ -63,9 +61,6 @@
       text-align: center;
       font-size: 14px;
       border-radius: 6px;
-      width: 80%;
-      margin-left: auto;
-      margin-right: auto;
     }
   </style>
 </head>
@@ -96,16 +91,25 @@
     const inputs = document.querySelectorAll('.code');
 
     inputs.forEach((input, index) => {
-      input.addEventListener('input', () => {
-        if (input.value && index < inputs.length - 1) {
-          inputs[index + 1].focus();
+      input.addEventListener('input', (e) => {
+        const value = e.target.value;
+        if (value) {
+          if (index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
         }
       });
 
       input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !input.value && index > 0) {
-          inputs[index - 1].focus();
-          inputs[index - 1].value = '';
+        if (e.key === "Backspace") {
+          if (input.value === "") {
+            if (index > 0) {
+              inputs[index - 1].focus();
+              inputs[index - 1].value = "";
+            }
+          } else {
+            input.value = "";
+          }
         }
       });
     });
