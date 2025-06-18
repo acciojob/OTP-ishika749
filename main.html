@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OTP Verification</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9fc;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -14,56 +15,65 @@
       margin: 0;
     }
 
-    .otp-box {
+    .container {
+      background: white;
       border: 2px solid black;
-      border-radius: 10px;
-      padding: 50px;
-      width: 600px;
-      background-color: white;
+      border-radius: 12px;
+      padding: 40px 20px;
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
     }
 
     #verification_heading {
-      text-align: center;
       font-size: 24px;
       font-weight: bold;
-      margin-bottom: 10px;
     }
 
     #verification_subtext {
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 30px;
+      font-size: 16px;
+      margin-top: 10px;
+      color: #555;
     }
 
     .code-container {
+      margin: 30px 0;
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 16px;
     }
 
     .code {
       width: 60px;
-      height: 60px;
-      font-size: 32px;
+      height: 80px;
+      font-size: 48px;
       text-align: center;
-      border: 1px solid #ccc;
+      border: 2px solid #ccc;
       border-radius: 8px;
+      outline: none;
+      transition: border 0.2s;
     }
 
-    .info-box {
-      margin-top: 30px;
-      background-color: #eee;
-      padding: 12px;
-      text-align: center;
+    .code:focus {
+      border-color: #000;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      background: #eee;
+      color: #666;
+      padding: 10px 15px;
       border-radius: 6px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <div class="otp-box">
-    <h1 id="verification_heading">Verify Your Account</h1>
-    <p id="verification_subtext">We emailed you the six digit code to acciojob@email.com Enter the code below to confirm your email address.</p>
+  <div class="container">
+    <h2 id="verification_heading">Verify Your Account</h2>
+    <p id="verification_subtext">
+      We emailed you the six digit code to acciojob@email.com. Enter the code below to confirm your email address.
+    </p>
 
     <div class="code-container">
       <input class="code" type="text" maxlength="1" />
@@ -74,43 +84,37 @@
       <input class="code" type="text" maxlength="1" />
     </div>
 
-    <div class="info-box">
-      This is design only. We didn’t actually send you an email as we don’t have your email, right?
+    <div class="footer-note">
+      This is design only. We didn't actually send you an email as we don't have your email, right?
     </div>
   </div>
 
   <script>
-    const inputs = document.querySelectorAll('.code');
+    const inputs = document.querySelectorAll(".code");
+
+    inputs[0].focus();
 
     inputs.forEach((input, index) => {
-      input.addEventListener('input', () => {
-        const value = input.value;
-        if (value && index < inputs.length - 1) {
+      input.addEventListener("input", (e) => {
+        const value = e.target.value;
+        if (value.length > 0 && index < inputs.length - 1) {
           inputs[index + 1].focus();
         }
       });
 
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace') {
-          if (input.value === '') {
-            if (index > 0) {
-              inputs[index - 1].value = '';
-              inputs[index - 1].focus();
-            }
-          } else {
-            input.value = '';
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace") {
+          if (input.value === "" && index > 0) {
+            inputs[index - 1].focus();
+            inputs[index - 1].value = "";
           }
         }
       });
     });
-
-    // Focus first input on page load
-    window.addEventListener('load', () => {
-      inputs[0].focus();
-    });
   </script>
 </body>
 </html>
+
 
 
 
